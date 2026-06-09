@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import InteractionResult, { SeverityBadge } from "../../components/InteractionResult";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ErrorBanner from "../../components/ErrorBanner";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -32,10 +34,7 @@ export default function PrescriptionDetail() {
   if (loading) {
     return (
       <main className="page">
-        <div className="loading-spinner">
-          <div className="spinner" />
-          <span>Loading prescription…</span>
-        </div>
+        <LoadingSpinner message="Loading prescription…" />
       </main>
     );
   }
@@ -43,10 +42,7 @@ export default function PrescriptionDetail() {
   if (error) {
     return (
       <main className="page">
-        <div className="error-banner">
-          <span className="error-banner-icon">⚠️</span>
-          <span>{error}</span>
-        </div>
+        <ErrorBanner message={error} />
         <button className="back-btn" onClick={() => router.push("/")}>
           ← Back to list
         </button>

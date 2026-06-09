@@ -53,12 +53,15 @@ If there are no interactions, return has_interactions: false, overall_severity: 
   });
 
   const text = message.content[0].text.trim();
-
-  // Strip any accidental markdown fences
   const clean = text.replace(/^```json\s*/i, "").replace(/```\s*$/, "").trim();
 
-  const result = JSON.parse(clean);
-  return result;
+  try {
+    return JSON.parse(clean);
+  } catch {
+    return {
+      error: "Interaction analysis returned an unexpected format. Please consult a pharmacist.",
+    };
+  }
 }
 
 module.exports = { checkInteractions };

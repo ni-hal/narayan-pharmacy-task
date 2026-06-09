@@ -1,6 +1,16 @@
 export default function InteractionResult({ interaction }) {
   if (!interaction) return null;
 
+  // Guard: if somehow a non-object (e.g. raw string) is passed, show a safe error
+  if (typeof interaction !== "object") {
+    return (
+      <div className="error-banner" style={{ marginTop: "1.5rem" }}>
+        <span className="error-banner-icon">⚠️</span>
+        <span>Interaction data could not be displayed. Please consult a pharmacist.</span>
+      </div>
+    );
+  }
+
   // API error fallback
   if (interaction.error) {
     return (

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import InteractionResult from "../components/InteractionResult";
+import ErrorBanner from "../components/ErrorBanner";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -100,12 +101,7 @@ export default function NewPrescription() {
         </p>
       </div>
 
-      {error && (
-        <div className="error-banner">
-          <span className="error-banner-icon">⚠️</span>
-          <span>{error}</span>
-        </div>
-      )}
+      <ErrorBanner message={error} />
 
       {saved && !error && (
         <div className="success-flash">
@@ -262,10 +258,7 @@ export default function NewPrescription() {
 
         {submitting && (
           <div className="ai-checking">
-            <span
-              className="spinner"
-              style={{ width: 20, height: 20, borderWidth: 2, flexShrink: 0 }}
-            />
+            <span className="spinner" style={{ width: 20, height: 20, borderWidth: 2, flexShrink: 0 }} />
             Analysing drug interactions with AI — this takes a few seconds…
           </div>
         )}

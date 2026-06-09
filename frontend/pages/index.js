@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { SeverityBadge } from "../components/InteractionResult";
+import LoadingSpinner from "../components/LoadingSpinner";
+import ErrorBanner from "../components/ErrorBanner";
 
 const API = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000";
 
@@ -41,19 +43,11 @@ export default function PrescriptionsList() {
         <p className="page-sub">All saved prescriptions with drug interaction status</p>
       </div>
 
-      {error && (
-        <div className="error-banner">
-          <span className="error-banner-icon">⚠️</span>
-          <span>{error}</span>
-        </div>
-      )}
+      <ErrorBanner message={error} />
 
       <div className="card" style={{ padding: 0, overflow: "hidden" }}>
         {loading ? (
-          <div className="loading-spinner">
-            <div className="spinner" />
-            <span>Loading prescriptions…</span>
-          </div>
+          <LoadingSpinner message="Loading prescriptions…" />
         ) : prescriptions.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">💊</div>
